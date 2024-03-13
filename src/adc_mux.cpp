@@ -1,5 +1,6 @@
 #include <libhal-soft/adc_mux.hpp>
 #include <libhal-util/steady_clock.hpp>
+#include <libhal/error.hpp>
 
 namespace hal::soft {
 using namespace hal::literals;
@@ -12,11 +13,16 @@ adc_multiplexer::adc_multiplexer(std::span<output_pin*> p_signal_pins,
                                  hal::steady_clock& p_clock)
   : m_signal_pins{ p_signal_pins }
   , m_source_pin{ &p_source_pin }
-  , m_clock{ &p_clock } {};
+  , m_clock{ &p_clock }
+{
+  if (p_signal_pins.size() <= 1) {
+    hal::safe_throw(hal::argument_out_of_domain(this));
+  }
+};
 
 int adc_multiplexer::get_max_channel()
 {
-  return 1 << m_signal_pins.size();
+  return (1 << m_signal_pins.size()) - 1;
 }
 
 /**
@@ -39,8 +45,13 @@ void adc_multiplexer::set_mux_channel(std::uint16_t p_position)
 
 float adc_multiplexer::read_channel(std::uint16_t p_mux_port)
 {
+  if (p_mux_port > get_max_channel()) {
+    hal::safe_throw(hal::argument_out_of_domain(this));
+  }
+
   set_mux_channel(p_mux_port);
   hal::delay(*m_clock, 500ns);
+
   return m_source_pin->read();
 }
 
@@ -57,7 +68,10 @@ adc_mux_pin::adc_mux_pin(adc_multiplexer& p_mux, std::uint8_t p_mux_port)
 
 float adc_mux_pin::driver_read()
 {
-  return m_mux->read_channel(m_mux_port);
+  // Skip bounds checking here, that was performed on construction.
+  m_mux->set_mux_channel(m_mux_port);
+  hal::delay(*(m_mux->m_clock), 500ns);
+  return m_mux->m_source_pin->read();
 }
 
 adc_mux_pin make_adc(adc_multiplexer& p_multiplexer, std::uint8_t p_channel)

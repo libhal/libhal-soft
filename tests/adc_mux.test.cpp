@@ -68,6 +68,18 @@ void adc_mux_test()
     expect(that % expected_sample_zero == test_sample);
   };
 
+  "adc_mux ctor failure due to too few mux pins"_test =
+    [signal_pins, source_adc, mock_timer]() mutable {
+      // Setup
+      expect(throws<hal::argument_out_of_domain>([&]() {
+        [[maybe_unused]] adc_multiplexer test_mux(
+          // Pass only the first element so the list is size of 1
+          std::span<hal::output_pin*>(signal_pins).first(1),
+          source_adc,
+          mock_timer);
+      }));
+    };
+
   // simulate reading from another pin
   "adc_mux_pin_switch"_test = [signal_pins, source_adc, mock_timer]() mutable {
     // Setup
@@ -98,16 +110,17 @@ void adc_mux_test()
     expect(that % true == second_signal_state.second);
   };
 
-  "adc_mux_error"_test = [signal_pins, source_adc, mock_timer]() mutable {
-    // Setup
-    adc_multiplexer test_mux(signal_pins, source_adc, mock_timer);
+  "make_adc(adc_mux, #count) error"_test =
+    [signal_pins, source_adc, mock_timer]() mutable {
+      // Setup
+      adc_multiplexer test_mux(signal_pins, source_adc, mock_timer);
 
-    // Exercise
-    // Verify
-    [[maybe_unused]] auto f = throws<hal::argument_out_of_domain>([&]() {
-      [[maybe_unused]] auto adc_pin = hal::make_adc(test_mux, 3).read();
-    });
-  };
+      // Exercise
+      // Verify
+      expect(throws<hal::argument_out_of_domain>([&]() {
+        [[maybe_unused]] auto adc_pin = hal::make_adc(test_mux, 4).read();
+      }));
+    };
 };
 
 }  // namespace hal::soft
