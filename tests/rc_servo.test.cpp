@@ -47,7 +47,7 @@ void rc_servo_test()
     pwm2.spy_frequency.trigger_error_on_call(
       1, []() { hal::safe_throw(hal::operation_not_supported(nullptr)); });
 
-    [[maybe_unused]] auto f = throws([&]() { rc_servo servo2(pwm2, {}); });
+    expect(throws([&]() { rc_servo servo2(pwm2, {}); }));
   };
 
   "hal::servo::rc_servo::position"_test = []() {
@@ -154,8 +154,8 @@ void rc_servo_test()
 
     // Exercise
     // Verify
-    [[maybe_unused]] auto f = throws<hal::argument_out_of_domain>(
-      [&]() { test.position(max_angle + 45.0f); });
+    expect(throws<hal::argument_out_of_domain>(
+      [&]() { test.position(max_angle + 45.0f); }));
   };
 };
 }  // namespace hal::soft

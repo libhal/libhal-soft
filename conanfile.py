@@ -25,7 +25,6 @@ required_conan_version = ">=2.0.14"
 class libhal_soft_conan(ConanFile):
     name = "libhal-soft"
     license = "Apache-2.0"
-    url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://libhal.github.io/libhal-soft"
     description = (
         "Library for generic soft drivers officially supported by libhal")

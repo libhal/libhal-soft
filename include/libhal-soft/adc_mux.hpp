@@ -44,6 +44,8 @@ public:
    * @param p_source_pin The output adc pin of the multiplexer.
    * @param p_clock A steady clock used for delaying 500ns to give time to the
    * mux to have an updated signal.
+   * @throws hal::argument_out_of_domain - if p_signal_pins has 1 or 0 pins.
+   * This is considered an unsupported use case of this driver.
    */
   adc_multiplexer(std::span<output_pin*> p_signal_pins,
                   hal::adc& p_source_pin,
@@ -55,6 +57,8 @@ public:
    * @param p_mux_port The port to be read. If an out of bounds port number is
    * passed, an error-typed result is returned.
    * @return float - adc sample from the selected channel.
+   * @throws hal::argument_out_of_domain - if p_mux_port is greater than the
+   * value returned from get_max_channel().
    */
   float read_channel(std::uint16_t p_mux_port);
 
@@ -69,6 +73,7 @@ public:
 
 private:
   void set_mux_channel(std::uint16_t p_position);
+  friend class adc_mux_pin;
 
   std::span<output_pin*> m_signal_pins;
   hal::adc* m_source_pin;
@@ -81,11 +86,11 @@ private:
  */
 class adc_mux_pin : public hal::adc
 {
-public:
-  adc_mux_pin(adc_multiplexer& p_mux, std::uint8_t p_mux_port);
-
 private:
+  adc_mux_pin(adc_multiplexer& p_mux, std::uint8_t p_mux_port);
   float driver_read() override;
+  friend adc_mux_pin make_adc(adc_multiplexer& p_multiplexer,
+                              std::uint8_t p_channel);
 
   adc_multiplexer* m_mux;
   std::uint8_t m_mux_port;
@@ -98,7 +103,7 @@ private:
  * @param p_multiplexer the adc multiplexer with the desire adc channel pin
  * @param p_channel The channel number of the pin
  * @return A newly constructed ADC multiplexer pin.
- * @throws std::errc::result_out_of_range if p_channel greater than the
+ * @throws hal::argument_out_of_domain - if p_channel greater than the
  * available number of channels in the multiplexer.
  */
 adc_mux_pin make_adc(adc_multiplexer& p_multiplexer, std::uint8_t p_channel);
