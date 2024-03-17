@@ -182,8 +182,7 @@ private:
    */
   output_pin* m_sda;
   /**
-   * @brief a steady_clock which will be used to correctly time the different
-   * frequencies
+   * @brief a steady_clock provides a mechanism to delay the clock pulses of the scl line.
    */
   steady_clock* m_clock;
 
