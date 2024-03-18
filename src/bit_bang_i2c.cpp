@@ -32,7 +32,7 @@ namespace hal {
 }
 
 // Public
-bit_bang_i2c::bit_bang_i2c(pins p_pins,
+bit_bang_i2c::bit_bang_i2c(const pins& p_pins,
                            steady_clock& p_clock,
                            const float p_duty_cycle)
   : m_scl(p_pins.scl)
@@ -44,26 +44,27 @@ bit_bang_i2c::bit_bang_i2c(pins p_pins,
 
 // Private
 
+/*
+  It was decided that no calibration should be done to the calculation for ticks
+  in the configure function. In this context, calibration refers to the addition
+  of ticks to the high and low clock time, which are derived from the level
+  function of the output_pin and the uptime function of the steady_clock. This
+  decision was made because it would introduce two critical sections in the code
+  that the end user would have to deal with. Additionally, it would only improve
+  the accuracy by about 0.1 to 0.01 Hz per clock cycle. This marginal
+  improvement in accuracy didn't outweigh the potential drawbacks it would
+  introduce to the system. See libhal-soft/demos/seleae_captures for the
+  comparisons.
+*/
 void bit_bang_i2c::driver_configure(const settings& p_settings)
 {
   using namespace std::chrono_literals;
 
   if (p_settings.clock_rate > m_clock->frequency()) {
-    throw hal::operation_not_supported(this);
+    hal::safe_throw(hal::operation_not_supported(this));
   }
 
   using period = std::chrono::nanoseconds::period;
-
-  // Calculate the delay due to the uptime function call
-  const auto callibration_start_tick = m_clock->uptime();
-  const auto callibration_end_tick = m_clock->uptime();
-  const auto uptime_ticks = callibration_end_tick - callibration_start_tick;
-
-  // Calculating output_pin going to true delay time
-  const auto before_output = m_clock->uptime();
-  m_scl->level(true);
-  const auto after_output = m_clock->uptime();
-  const auto calibration_ticks = after_output - before_output - uptime_ticks;
 
   // Calculate period in nanosecond
   auto period_ns = hal::wavelength<period>(p_settings.clock_rate);
@@ -74,11 +75,9 @@ void bit_bang_i2c::driver_configure(const settings& p_settings)
   const auto frequency = m_clock->frequency();
   const auto tick_period = hal::wavelength<period>(frequency);
 
-  m_scl_high_ticks =
-    static_cast<uint64_t>(scl_high_time / tick_period) - calibration_ticks;
-
-  m_scl_low_ticks =
-    static_cast<uint64_t>(scl_low_time / tick_period) - calibration_ticks;
+  // calculation for ticks
+  m_scl_high_ticks = static_cast<uint64_t>(scl_high_time / tick_period);
+  m_scl_low_ticks = static_cast<uint64_t>(scl_low_time / tick_period);
 }
 
 void bit_bang_i2c::driver_transaction(

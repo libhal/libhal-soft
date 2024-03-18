@@ -23,11 +23,15 @@ namespace hal {
 /**
  * @brief A bit bang implementation for i2c.
  *
- * This implementation of i2c only needs 2 gpios and a steady_clock to work
- * correctly. It supports single-controller multiple peripherals but  we intend
- * to support multiple controllers in the future. bit-bang is a best-effort
- * implementation of i2c. The maximum achievable clock rate for the lpc4078 is
- * about 180kHz. Interrupts disrupt this controller.
+ * This implementation of i2c only needs 2 hal::output_pins and a steady_clock
+ * to work. It does not support multi-controller but we intend to support it in
+ * the future. the data transfer rate for bit-bang is a best-effort
+ * implementation meaning it will almost always run at a frequency which is less
+ * then the request one but, never faster. The maximum achievable clock rate for
+ * the lpc4078 is about 180kHz. Interrupts disrupt this controller because the
+ * transfer is a blocking operation which means an interupt may come in the
+ * middle of a transaction and may leave a transaction hanging which some
+ * peripherals may not support.
  */
 class bit_bang_i2c : public i2c
 {
@@ -44,9 +48,10 @@ public:
    * @param p_pins This holds both scl and sda to be used inside of the driver
    * @param p_steady_clock A steady clock that should have a higher frequency
    * then the configured frequency for the bit bang
-   * @param p_duty_cycle The duty cycle that the clock sent over scl will run at
+   * @param p_duty_cycle The duty cycle that the clock, sent over scl, will run
+   * at
    */
-  bit_bang_i2c(pins p_pins,
+  bit_bang_i2c(const pins& p_pins,
                steady_clock& p_steady_clock,
                const float p_duty_cycle = 0.5f);
 
@@ -171,7 +176,8 @@ private:
   /// @brief The time that scl will be held low for
   uint64_t m_scl_low_ticks;
 
-  /// @brief All the information that the bus will need to operate on
+  /// @brief This is used to preserve the duty cycle that is passed in through
+  /// the constructor and be used in the driver_configure function
   float m_duty_cycle;
 };
 }  // namespace hal
