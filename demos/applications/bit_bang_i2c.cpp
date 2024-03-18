@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <libhal-soft/i2c_bit_bang.hpp>
+#include <libhal-soft/bit_bang_i2c.hpp>
 #include <libhal-stm-imu/lis3dhtr_i2c.hpp>
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
@@ -33,12 +33,12 @@ void application(hardware_map_t& p_map)
   hal::print(console, "Starting lis3dhtr_i2c Application...\n");
   hal::delay(clock, 50ms);
 
-  hal::i2c_bit_bang::i2c_pins pins{ .sda = &sda, .scl = &scl };
+  hal::bit_bang_i2c::pins pins{ .sda = &sda, .scl = &scl };
 
-  hal::i2c_bit_bang i2c_bit_bang(pins, clock, hal::i2c_bit_bang::bus_info{});
-  i2c_bit_bang.configure(hal::i2c::settings{ .clock_rate = 100.0_kHz });
+  hal::bit_bang_i2c bit_bang_i2c(pins, clock);
+  bit_bang_i2c.configure(hal::i2c::settings{ .clock_rate = 100.0_kHz });
 
-  hal::stm_imu::lis3dhtr_i2c lis(i2c_bit_bang);
+  hal::stm_imu::lis3dhtr_i2c lis(bit_bang_i2c);
 
   while (true) {
     hal::delay(clock, 500ms);

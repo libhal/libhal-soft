@@ -19,7 +19,7 @@ libhal_test_and_make_library(
   LIBRARY_NAME libhal-soft
 
   SOURCES
-  src/i2c_bit_bang.cpp
+  src/bit_bang_i2c.cpp
   src/rc_servo.cpp
   src/i2c_minimum_speed.cpp
   src/adc_mux.cpp

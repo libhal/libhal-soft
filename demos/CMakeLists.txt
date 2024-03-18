@@ -17,7 +17,7 @@ project(demos LANGUAGES CXX)
 
 libhal_build_demos(
   DEMOS
-  i2c_bit_bang
+  bit_bang_i2c
 
   PACKAGES
   libhal-soft
