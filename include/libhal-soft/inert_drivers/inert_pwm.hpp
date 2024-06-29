@@ -33,7 +33,11 @@ public:
   }
 
 private:
-  void driver_frequency([[maybe_unused]] hertz p_frequency){};
-  void driver_duty_cycle([[maybe_unused]] float p_duty_cycle){};
+  void driver_frequency([[maybe_unused]] hertz p_frequency)
+  {
+  }
+  void driver_duty_cycle([[maybe_unused]] float p_duty_cycle)
+  {
+  }
 };
 }  // namespace hal::soft

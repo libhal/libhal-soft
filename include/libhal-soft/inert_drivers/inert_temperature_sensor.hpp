@@ -38,7 +38,7 @@ private:
   hal::celsius driver_read()
   {
     return m_temperature;
-  };
+  }
 
   hal::celsius m_temperature;
 };

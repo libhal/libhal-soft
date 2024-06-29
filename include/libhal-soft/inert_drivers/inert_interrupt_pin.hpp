@@ -32,7 +32,11 @@ public:
   }
 
 private:
-  void driver_configure([[maybe_unused]] const settings& p_settings){};
-  void driver_on_trigger([[maybe_unused]] hal::callback<handler> p_callback){};
+  void driver_configure([[maybe_unused]] settings const& p_settings)
+  {
+  }
+  void driver_on_trigger([[maybe_unused]] hal::callback<handler> p_callback)
+  {
+  }
 };
 }  // namespace hal::soft

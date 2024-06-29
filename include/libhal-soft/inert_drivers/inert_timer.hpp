@@ -38,11 +38,15 @@ private:
   bool driver_is_running()
   {
     return m_is_running;
-  };
+  }
 
-  void driver_cancel(){};
+  void driver_cancel()
+  {
+  }
   void driver_schedule([[maybe_unused]] hal::callback<void(void)> p_callback,
-                       [[maybe_unused]] hal::time_duration p_delay){};
+                       [[maybe_unused]] hal::time_duration p_delay)
+  {
+  }
 
   bool m_is_running;
 };

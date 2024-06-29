@@ -26,7 +26,7 @@ void inert_i2c_test()
     constexpr hal::byte address{ 100 };
     constexpr std::array<hal::byte, 4> data_out{ 'a', 'b' };
     std::array<hal::byte, 4> data_in{ '1', '2' };
-    const hal::function_ref<hal::timeout_function> timeout = []() {
+    hal::function_ref<hal::timeout_function> const timeout = []() {
       return success();
     };
     auto test = inert_i2c::create();

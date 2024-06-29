@@ -38,7 +38,7 @@ private:
   hal::meters driver_read()
   {
     return m_result;
-  };
+  }
 
   hal::meters m_result;
 };

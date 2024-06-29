@@ -25,29 +25,29 @@ input_pin_inverter::input_pin_inverter(hal::input_pin& p_input_pin)
 }
 
 void output_pin_inverter::driver_configure(
-  const hal::output_pin::settings& p_settings)
+  hal::output_pin::settings const& p_settings)
 {
   m_output_pin->configure(p_settings);
-};
+}
 
 void output_pin_inverter::driver_level(bool p_high)
 {
   m_output_pin->level(!p_high);
-};
+}
 
 bool output_pin_inverter::driver_level()
 {
   return !m_output_pin->level();
-};
+}
 
 void input_pin_inverter::driver_configure(
-  const hal::input_pin::settings& p_settings)
+  hal::input_pin::settings const& p_settings)
 {
   m_input_pin->configure(p_settings);
-};
+}
 
 bool input_pin_inverter::driver_level()
 {
   return !m_input_pin->level();
-};
+}
 }  // namespace hal::soft

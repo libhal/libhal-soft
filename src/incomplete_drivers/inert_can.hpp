@@ -45,7 +45,7 @@ private:
   {
   }
 
-  status driver_configure([[maybe_unused]] const settings& p_settings)
+  status driver_configure([[maybe_unused]] settings const& p_settings)
   {
 
     return hal::success();
@@ -57,12 +57,12 @@ private:
       return hal::success();
     }
     return hal::new_error();
-  };
+  }
 
-  result<send_t> driver_send([[maybe_unused]] const message_t& p_message)
+  result<send_t> driver_send([[maybe_unused]] message_t const& p_message)
   {
     return send_t{};
-  };
+  }
 
   void driver_on_receive([[maybe_unused]] hal::callback<handler> p_handler){};
 

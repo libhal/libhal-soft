@@ -20,10 +20,10 @@ namespace hal {
   steady_clock* p_steady_clock,
   uint64_t ticks)
 {
-  const auto start_time_high = p_steady_clock->uptime();
+  auto const start_time_high = p_steady_clock->uptime();
   uint64_t uptime = 0;
 
-  const auto ticks_until_timeout_high = ticks + start_time_high;
+  auto const ticks_until_timeout_high = ticks + start_time_high;
 
   while (uptime < ticks_until_timeout_high) {
     uptime = p_steady_clock->uptime();
@@ -32,9 +32,9 @@ namespace hal {
 }
 
 // Public
-bit_bang_i2c::bit_bang_i2c(const pins& p_pins,
+bit_bang_i2c::bit_bang_i2c(pins const& p_pins,
                            steady_clock& p_clock,
-                           const float p_duty_cycle)
+                           float const p_duty_cycle)
   : m_scl(p_pins.scl)
   , m_sda(p_pins.sda)
   , m_clock(&p_clock)
@@ -56,7 +56,7 @@ bit_bang_i2c::bit_bang_i2c(const pins& p_pins,
   introduce to the system. See libhal-soft/demos/seleae_captures for the
   comparisons.
 */
-void bit_bang_i2c::driver_configure(const settings& p_settings)
+void bit_bang_i2c::driver_configure(settings const& p_settings)
 {
   using namespace std::chrono_literals;
 
@@ -72,8 +72,8 @@ void bit_bang_i2c::driver_configure(const settings& p_settings)
   auto scl_low_time = period_ns - scl_high_time;
 
   // Calculate ticks for high and low
-  const auto frequency = m_clock->frequency();
-  const auto tick_period = hal::wavelength<period>(frequency);
+  auto const frequency = m_clock->frequency();
+  auto const tick_period = hal::wavelength<period>(frequency);
 
   // calculation for ticks
   m_scl_high_ticks = static_cast<uint64_t>(scl_high_time / tick_period);
@@ -82,7 +82,7 @@ void bit_bang_i2c::driver_configure(const settings& p_settings)
 
 void bit_bang_i2c::driver_transaction(
   hal::byte p_address,
-  std::span<const hal::byte> p_data_out,
+  std::span<hal::byte const> p_data_out,
   std::span<hal::byte> p_data_in,
   function_ref<hal::timeout_function> p_timeout)
 {
@@ -149,11 +149,11 @@ void bit_bang_i2c::write_address(hal::byte p_address,
   }
 }
 
-void bit_bang_i2c::write(std::span<const hal::byte> p_data_out,
+void bit_bang_i2c::write(std::span<hal::byte const> p_data_out,
                          function_ref<hal::timeout_function> p_timeout)
 {
   bool acknowledged;
-  for (const hal::byte& data : p_data_out) {
+  for (hal::byte const& data : p_data_out) {
 
     acknowledged = write_byte(data, p_timeout);
 

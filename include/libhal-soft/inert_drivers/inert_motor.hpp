@@ -33,6 +33,8 @@ public:
   }
 
 private:
-  void driver_power([[maybe_unused]] float p_power){};
+  void driver_power([[maybe_unused]] float p_power)
+  {
+  }
 };
 }  // namespace hal::soft
