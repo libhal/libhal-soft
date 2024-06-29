@@ -18,7 +18,7 @@ adc_multiplexer::adc_multiplexer(std::span<output_pin*> p_signal_pins,
   if (p_signal_pins.size() <= 1) {
     hal::safe_throw(hal::argument_out_of_domain(this));
   }
-};
+}
 
 int adc_multiplexer::get_max_channel()
 {
@@ -64,7 +64,7 @@ adc_mux_pin::adc_mux_pin(adc_multiplexer& p_mux, std::uint8_t p_mux_port)
   if (p_mux_port > p_mux.get_max_channel()) {
     hal::safe_throw(hal::argument_out_of_domain(&p_mux));
   }
-};
+}
 
 float adc_mux_pin::driver_read()
 {

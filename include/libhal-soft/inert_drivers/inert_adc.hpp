@@ -41,7 +41,7 @@ private:
   float driver_read()
   {
     return m_result;
-  };
+  }
 
   float m_result;
 };

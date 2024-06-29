@@ -41,13 +41,13 @@ private:
   hal::hertz driver_frequency()
   {
     return m_frequency;
-  };
+  }
 
   std::uint64_t driver_uptime()
   {
     m_uptime++;
     return m_uptime;
-  };
+  }
 
   hal::hertz m_frequency;
   std::uint64_t m_uptime;

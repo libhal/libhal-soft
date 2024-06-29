@@ -40,17 +40,17 @@ private:
   {
   }
 
-  status driver_configure([[maybe_unused]] const settings& p_settings)
+  status driver_configure([[maybe_unused]] settings const& p_settings)
   {
     return hal::success();
-  };
+  }
 
   result<transfer_t> driver_transfer(
-    [[maybe_unused]] std::span<const hal::byte> p_data_out,
+    [[maybe_unused]] std::span<hal::byte const> p_data_out,
     [[maybe_unused]] std::span<hal::byte> p_data_in,
     [[maybe_unused]] hal::byte p_filler)
   {
     return transfer_t{};
-  };
+  }
 };
 }  // namespace hal::soft

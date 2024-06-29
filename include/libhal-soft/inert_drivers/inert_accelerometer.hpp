@@ -38,7 +38,7 @@ private:
   read_t driver_read()
   {
     return m_values;
-  };
+  }
 
   read_t m_values;
 };

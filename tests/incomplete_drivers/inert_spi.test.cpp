@@ -22,9 +22,9 @@ void inert_spi_test()
   using namespace boost::ut;
   "inert_spi"_test = []() {
     // Setup
-    const std::array<hal::byte, 4> data_out{ 'a', 'b' };
+    std::array<hal::byte, 4> const data_out{ 'a', 'b' };
     std::array<hal::byte, 4> data_in{ '1', '2' };
-    const auto data_filler = ' ';
+    auto const data_filler = ' ';
     constexpr auto configure_settings = spi::settings{};
     auto test = inert_spi::create();
 

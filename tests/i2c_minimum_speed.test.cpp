@@ -31,20 +31,20 @@ struct fake_i2c : public hal::i2c
   hal::spy_handler<settings> spy_configure;
   /// Record of the out data from hal::i2c::transaction()
   hal::spy_handler<hal::byte,
-                   std::span<const hal::byte>,
+                   std::span<hal::byte const>,
                    std::span<hal::byte>,
                    std::function<hal::timeout_function>>
     spy_transaction;
 
 private:
-  void driver_configure(const settings& p_settings) final
+  void driver_configure(settings const& p_settings) final
   {
     spy_configure.record(p_settings);
   }
 
   void driver_transaction(
     hal::byte p_address,
-    std::span<const hal::byte> p_data_out,
+    std::span<hal::byte const> p_data_out,
     std::span<hal::byte> p_data_in,
     hal::function_ref<hal::timeout_function> p_timeout) final
   {
@@ -54,8 +54,8 @@ private:
 }  // namespace
 
 namespace hal::soft {
-[[nodiscard]] constexpr auto operator==(const i2c::settings& p_lhs,
-                                        const i2c::settings& p_rhs)
+[[nodiscard]] constexpr auto operator==(i2c::settings const& p_lhs,
+                                        i2c::settings const& p_rhs)
 {
   return hal::equals(p_lhs.clock_rate, p_rhs.clock_rate);
 }
@@ -90,7 +90,7 @@ void minimum_speed_test()
     "transaction pass through"_test = []() {
       // Setup
       constexpr hal::byte expected_address{ 0xAA };
-      constexpr std::array<const hal::byte, 2> data_out{ hal::byte{ 0xAB },
+      constexpr std::array<hal::byte const, 2> data_out{ hal::byte{ 0xAB },
                                                          hal::byte{ 0xFF } };
       std::span<hal::byte> data_in;
       bool has_been_called = false;

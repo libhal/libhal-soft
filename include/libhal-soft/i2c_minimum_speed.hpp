@@ -40,11 +40,11 @@ private:
    *
    * @param p_new_setting - settings to be set
    */
-  void driver_configure(const settings& p_new_setting) override;
+  void driver_configure(settings const& p_new_setting) override;
 
   void driver_transaction(
     hal::byte p_address,
-    std::span<const hal::byte> p_data_out,
+    std::span<hal::byte const> p_data_out,
     std::span<hal::byte> p_data_in,
     hal::function_ref<hal::timeout_function> p_timeout) override;
 

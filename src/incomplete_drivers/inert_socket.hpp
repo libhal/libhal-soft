@@ -44,16 +44,16 @@ private:
   }
 
   hal::result<write_t> driver_write(
-    [[maybe_unused]] std::span<const hal::byte> p_data,
+    [[maybe_unused]] std::span<hal::byte const> p_data,
     [[maybe_unused]] hal::function_ref<hal::timeout_function> p_timeout)
   {
     return m_write_data;
-  };
+  }
 
   hal::result<read_t> driver_read([[maybe_unused]] std::span<hal::byte> p_data)
   {
     return m_read_data;
-  };
+  }
 
   write_t m_write_data;
   read_t m_read_data;

@@ -43,26 +43,26 @@ private:
   {
   }
 
-  status driver_configure([[maybe_unused]] const settings& p_settings)
+  status driver_configure([[maybe_unused]] settings const& p_settings)
   {
     return hal::success();
-  };
+  }
 
   result<write_t> driver_write(
-    [[maybe_unused]] std::span<const hal::byte> p_data)
+    [[maybe_unused]] std::span<hal::byte const> p_data)
   {
     return m_write_data;
-  };
+  }
 
   result<read_t> driver_read([[maybe_unused]] std::span<hal::byte> p_data)
   {
     return m_read_data;
-  };
+  }
 
   result<flush_t> driver_flush()
   {
     return flush_t{};
-  };
+  }
 
   write_t m_write_data;
   read_t m_read_data;
