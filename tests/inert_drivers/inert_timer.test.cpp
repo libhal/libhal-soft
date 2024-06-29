@@ -22,8 +22,8 @@ void inert_timer_test()
   using namespace boost::ut;
   "inert_timer"_test = []() {
     // Setup
-    const hal::callback<void(void)> callback = []() {};
-    const hal::time_duration delay = {};
+    hal::callback<void(void)> const callback = []() {};
+    hal::time_duration const delay = {};
     auto is_running = true;
     auto is_not_running = false;
     inert_timer test1(is_running);

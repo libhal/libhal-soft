@@ -43,13 +43,13 @@ private:
   {
   }
 
-  status driver_configure([[maybe_unused]] const settings& p_settings)
+  status driver_configure([[maybe_unused]] settings const& p_settings)
   {
     return hal::success();
   };
 
   result<write_t> driver_write(
-    [[maybe_unused]] std::span<const hal::byte> p_data)
+    [[maybe_unused]] std::span<hal::byte const> p_data)
   {
     return m_write_data;
   };

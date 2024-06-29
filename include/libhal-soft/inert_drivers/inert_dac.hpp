@@ -32,6 +32,6 @@ public:
   }
 
 private:
-  void driver_write([[maybe_unused]] float p_percentage){};
+  void driver_write([[maybe_unused]] float p_percentage) {};
 };
 }  // namespace hal::soft

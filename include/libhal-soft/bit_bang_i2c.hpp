@@ -51,16 +51,16 @@ public:
    * @param p_duty_cycle The duty cycle that the clock, sent over scl, will run
    * at
    */
-  bit_bang_i2c(const pins& p_pins,
+  bit_bang_i2c(pins const& p_pins,
                steady_clock& p_steady_clock,
-               const float p_duty_cycle = 0.5f);
+               float const p_duty_cycle = 0.5f);
 
 private:
-  void driver_configure(const settings& p_settings) override;
+  void driver_configure(settings const& p_settings) override;
 
   virtual void driver_transaction(
     hal::byte p_address,
-    std::span<const hal::byte> p_data_out,
+    std::span<hal::byte const> p_data_out,
     std::span<hal::byte> p_data_in,
     function_ref<hal::timeout_function> p_timeout) override;
 
@@ -103,7 +103,7 @@ private:
    * @throws hal::io_error when the data written to the bus was not
    * acknowledged
    */
-  void write(std::span<const hal::byte> p_data_out,
+  void write(std::span<hal::byte const> p_data_out,
              function_ref<hal::timeout_function> p_timeout);
 
   /**
