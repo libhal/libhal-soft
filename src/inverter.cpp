@@ -25,7 +25,7 @@ input_pin_inverter::input_pin_inverter(hal::input_pin& p_input_pin)
 }
 
 void output_pin_inverter::driver_configure(
-  const hal::output_pin::settings& p_settings)
+  hal::output_pin::settings const& p_settings)
 {
   m_output_pin->configure(p_settings);
 };
@@ -41,7 +41,7 @@ bool output_pin_inverter::driver_level()
 };
 
 void input_pin_inverter::driver_configure(
-  const hal::input_pin::settings& p_settings)
+  hal::input_pin::settings const& p_settings)
 {
   m_input_pin->configure(p_settings);
 };
