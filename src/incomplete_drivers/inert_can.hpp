@@ -49,7 +49,7 @@ private:
   {
 
     return hal::success();
-  };
+  }
 
   status driver_bus_on()
   {
@@ -64,7 +64,9 @@ private:
     return send_t{};
   }
 
-  void driver_on_receive([[maybe_unused]] hal::callback<handler> p_handler){};
+  void driver_on_receive([[maybe_unused]] hal::callback<handler> p_handler)
+  {
+  }
 
   bool m_bus_on;
 };

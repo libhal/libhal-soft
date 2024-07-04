@@ -35,7 +35,10 @@ public:
   }
 
 private:
-  void driver_configure([[maybe_unused]] settings const& p_settings){};
+  void driver_configure([[maybe_unused]] settings const& p_settings)
+  {
+  }
+
   bool driver_level()
   {
     return m_level;
