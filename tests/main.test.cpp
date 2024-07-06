@@ -18,6 +18,7 @@ extern void minimum_speed_test();
 extern void rc_servo_test();
 extern void output_pin_iverter_test();
 extern void input_pin_iverter_test();
+extern void atomic_spin_lock_test();
 
 extern void inert_accelerometer_test();
 extern void inert_adc_test();
@@ -42,6 +43,7 @@ int main()
   hal::soft::rc_servo_test();
   hal::soft::output_pin_iverter_test();
   hal::soft::input_pin_iverter_test();
+  hal::soft::atomic_spin_lock_test();
 
   hal::soft::inert_accelerometer_test();
   hal::soft::inert_adc_test();

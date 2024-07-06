@@ -22,6 +22,7 @@ libhal_test_and_make_library(
   src/bit_bang_i2c.cpp
   src/rc_servo.cpp
   src/i2c_minimum_speed.cpp
+  src/atomic_spin_lock.cpp
   src/adc_mux.cpp
   src/inverter.cpp
 
@@ -44,6 +45,7 @@ libhal_test_and_make_library(
   tests/i2c_minimum_speed.test.cpp
   tests/inverter.test.cpp
   tests/rc_servo.test.cpp
+  tests/atomic_spin_lock.test.cpp
   tests/main.test.cpp
 
   PACKAGES
@@ -56,7 +58,9 @@ libhal_test_and_make_library(
 
   TEST_PACKAGES
   libhal-mock
+  libhal-util
 
   TEST_LINK_LIBRARIES
   libhal::mock
+  libhal::util
 )
