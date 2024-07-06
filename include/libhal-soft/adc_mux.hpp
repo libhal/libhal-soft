@@ -14,7 +14,6 @@
 
 #pragma once
 
-#include <array>
 #include <span>
 
 #include <libhal/adc.hpp>

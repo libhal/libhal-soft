@@ -14,9 +14,9 @@
 
 #pragma once
 
-#include <chrono>
 #include <libhal/i2c.hpp>
 #include <libhal/output_pin.hpp>
+#include <libhal/steady_clock.hpp>
 #include <libhal/units.hpp>
 
 namespace hal {
