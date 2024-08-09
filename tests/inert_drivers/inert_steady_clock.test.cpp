@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_steady_clock_test()
-{
+boost::ut::suite inert_steady_clock_test = []() {
   using namespace boost::ut;
   "inert_steady_clock"_test = []() {
     // Setup

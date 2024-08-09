@@ -15,7 +15,6 @@
 #include <libhal-soft/atomic_spin_lock.hpp>
 
 #include <stdexcept>
-#include <system_error>
 #include <thread>
 
 #include <libhal-mock/steady_clock.hpp>
@@ -23,8 +22,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void atomic_spin_lock_test()
-{
+boost::ut::suite atomic_spin_lock_test = []() {
   using namespace boost::ut;
   using namespace std::chrono_literals;
 
@@ -162,5 +160,5 @@ void atomic_spin_lock_test()
       expect(that % lock_acquired_1);
     };
   };
-}
+};
 }  // namespace hal::soft

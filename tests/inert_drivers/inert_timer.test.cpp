@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_timer_test()
-{
+boost::ut::suite inert_timer_test = []() {
   using namespace boost::ut;
   "inert_timer"_test = []() {
     // Setup

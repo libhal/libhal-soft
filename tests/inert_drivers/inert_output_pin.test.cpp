@@ -17,12 +17,26 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_output_pin_test()
-{
+boost::ut::suite inert_output_pin_test = []() {
   using namespace boost::ut;
   "inert_output_pin"_test = []() {
     // Setup
     inert_output_pin test(false);
+
+    // Exercise
+    test.level(true);
+    auto get_level_high_result = test.level();
+    test.level(false);
+    auto get_level_low_result = test.level();
+
+    // Verify
+    expect(that % true == get_level_high_result);
+    expect(that % false == get_level_low_result);
+  };
+
+  "default_inert_output_pin"_test = []() {
+    // Setup
+    hal::output_pin& test = hal::soft::default_inert_output_pin();
 
     // Exercise
     test.level(true);

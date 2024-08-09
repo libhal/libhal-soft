@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_adc_test()
-{
+boost::ut::suite inert_adc_test = []() {
   using namespace boost::ut;
   "inert_adc"_test = []() {
     // Setup

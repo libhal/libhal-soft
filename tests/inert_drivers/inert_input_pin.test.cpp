@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_input_pin_test()
-{
+boost::ut::suite inert_input_pin_test = []() {
   using namespace boost::ut;
   "inert_input_pin"_test = []() {
     // Setup

@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_temperature_sensor_test()
-{
+boost::ut::suite inert_temperature_sensor_test = []() {
   using namespace boost::ut;
   "inert_temperature_sensor"_test = []() {
     // Setup

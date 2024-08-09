@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_distance_sensor_test()
-{
+boost::ut::suite inert_distance_sensor_test = []() {
   using namespace boost::ut;
   "inert_distance_sensor"_test = []() {
     // Setup

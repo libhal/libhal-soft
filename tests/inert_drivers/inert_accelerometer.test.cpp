@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_accelerometer_test()
-{
+boost::ut::suite inert_accelerometer_test = []() {
   using namespace boost::ut;
   "inert_accelerometer"_test = []() {
     // Setup

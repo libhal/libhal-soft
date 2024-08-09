@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_pwm_test()
-{
+boost::ut::suite inert_pwm_test = []() {
   using namespace boost::ut;
   "inert_pwm"_test = []() {
     // Setup
