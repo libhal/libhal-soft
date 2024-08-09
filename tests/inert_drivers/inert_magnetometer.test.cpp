@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_magnetometer_test()
-{
+boost::ut::suite inert_magnetometer_test = []() {
   using namespace boost::ut;
   "inert_magnetometer"_test = []() {
     // Setup

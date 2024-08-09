@@ -31,7 +31,7 @@ public:
    * value can be changed by using level(bool) after creation.
    */
   constexpr inert_output_pin(bool p_level)
-    : m_level(&p_level)
+    : m_level(p_level)
   {
   }
 
@@ -51,4 +51,23 @@ private:
 
   bool m_level;
 };
+
+/**
+ * @brief Returns a default inert output pin for use as a default parameter
+ *
+ * Consider a driver that can accept an output pin but normally doesn't need to
+ * use it, this paramater can be used as a default parameters. For example, a
+ * driver that can optionally light up a status LED during activity. Rather than
+ * use std::optional which would add an additional branch at all unique call
+ * sites for the output pin, adding to code size, this driver can be used as a
+ * substitute.
+ *
+ * @return hal::output_pin& - reference to a single default inert output pin.
+ * All calls to this function return the same output pin.
+ */
+inline hal::output_pin& default_inert_output_pin()
+{
+  static inert_output_pin _default_inert_output_pin(false);
+  return _default_inert_output_pin;
+}
 }  // namespace hal::soft

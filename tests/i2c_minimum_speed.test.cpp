@@ -60,8 +60,7 @@ namespace hal::soft {
   return hal::equals(p_lhs.clock_rate, p_rhs.clock_rate);
 }
 
-void minimum_speed_test()
-{
+boost::ut::suite test_minimum_speed = []() {
   using namespace boost::ut;
 
   "hal::i2c::minimum_speed_i2c"_test = []() {

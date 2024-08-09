@@ -15,7 +15,6 @@
 #include <libhal-soft/adc_mux.hpp>
 
 #include <queue>
-#include <vector>
 
 #include <libhal-mock/adc.hpp>
 #include <libhal-mock/output_pin.hpp>
@@ -24,9 +23,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-
-void adc_mux_test()
-{
+boost::ut::suite adc_mux_test = []() {
   // Setup for all tests
   using namespace boost::ut;
 

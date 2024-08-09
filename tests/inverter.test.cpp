@@ -20,8 +20,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void output_pin_iverter_test()
-{
+boost::ut::suite output_pin_inverter_test = []() {
   using namespace boost::ut;
 
   "hal::output_pin_inverter::configure"_test = []() {
@@ -93,7 +92,7 @@ void output_pin_iverter_test()
       expect(that % false == level_result);
     };
   };
-}
+};
 
 void input_pin_iverter_test()
 {

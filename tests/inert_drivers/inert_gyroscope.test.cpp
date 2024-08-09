@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_gyroscope_test()
-{
+boost::ut::suite inert_gyroscope_test = []() {
   using namespace boost::ut;
   "inert_gyroscope"_test = []() {
     // Setup

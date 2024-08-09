@@ -37,6 +37,7 @@ libhal_test_and_make_library(
   tests/inert_drivers/inert_magnetometer.test.cpp
   tests/inert_drivers/inert_motor.test.cpp
   tests/inert_drivers/inert_pwm.test.cpp
+  tests/inert_drivers/inert_output_pin.test.cpp
   tests/inert_drivers/inert_rotation_sensor.test.cpp
   tests/inert_drivers/inert_steady_clock.test.cpp
   tests/inert_drivers/inert_temperature_sensor.test.cpp

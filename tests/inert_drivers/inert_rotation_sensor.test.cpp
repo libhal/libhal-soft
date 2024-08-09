@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_rotation_sensor_test()
-{
+boost::ut::suite inert_rotation_sensor_test = []() {
   using namespace boost::ut;
   "inert_rotation_sensor"_test = []() {
     // Setup

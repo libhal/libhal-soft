@@ -17,8 +17,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void inert_motor_test()
-{
+boost::ut::suite inert_motor_test = []() {
   using namespace boost::ut;
   "inert_motor"_test = []() {
     // Setup

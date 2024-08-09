@@ -20,8 +20,7 @@
 #include <boost/ut.hpp>
 
 namespace hal::soft {
-void rc_servo_test()
-{
+boost::ut::suite test_rc_servo = []() {
   using namespace boost::ut;
 
   "hal::servo::rc_servo::create"_test = []() {
