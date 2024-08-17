@@ -30,19 +30,19 @@ void application(hardware_map_t& p_map)
   auto& scl = *p_map.scl;
   auto& sda = *p_map.sda;
 
-  hal::print(console, "Starting lis3dhtr_i2c Application...\n");
+  hal::print(
+    console,
+    "Starting bit bang i2c Application using a lis3dhtr_i2c driver...\n");
   hal::delay(clock, 50ms);
 
-  hal::bit_bang_i2c::pins pins{ .sda = &sda, .scl = &scl };
-
-  hal::bit_bang_i2c bit_bang_i2c(pins, clock);
+  hal::soft::bit_bang_i2c bit_bang_i2c({ .sda = &sda, .scl = &scl }, clock);
   bit_bang_i2c.configure(hal::i2c::settings{ .clock_rate = 100.0_kHz });
 
-  hal::stm_imu::lis3dhtr_i2c lis(bit_bang_i2c);
+  hal::stm_imu::lis3dhtr_i2c accelerometer(bit_bang_i2c);
 
   while (true) {
     hal::delay(clock, 500ms);
-    auto acceleration = lis.read();
+    auto const acceleration = accelerometer.read();
     hal::print<128>(console,
                     "Scale: 2g \t x = %fg, y = %fg, z = %fg \n",
                     acceleration.x,

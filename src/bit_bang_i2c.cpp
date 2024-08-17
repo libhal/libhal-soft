@@ -9,16 +9,14 @@
 
 namespace hal {
 
+namespace {
 /**
  * @brief This function is a high speed version of the hal::delay function
  * which operates on ticks
  *
  * @param ticks The amount of ticks this function will delay for
  */
-
-[[gnu::always_inline]] inline void high_speed_delay(
-  steady_clock* p_steady_clock,
-  uint64_t ticks)
+void high_speed_delay(steady_clock* p_steady_clock, uint64_t ticks)
 {
   auto const start_time_high = p_steady_clock->uptime();
   uint64_t uptime = 0;
@@ -30,16 +28,29 @@ namespace hal {
     continue;
   }
 }
+}  // namespace
 
 // Public
 bit_bang_i2c::bit_bang_i2c(pins const& p_pins,
                            steady_clock& p_clock,
-                           float const p_duty_cycle)
+                           float const p_duty_cycle,
+                           hal::i2c::settings const& p_settings)
   : m_scl(p_pins.scl)
   , m_sda(p_pins.sda)
   , m_clock(&p_clock)
   , m_duty_cycle(p_duty_cycle)
 {
+  bool valid_duty_cycle = 0.3f <= p_duty_cycle && p_duty_cycle <= 0.7f;
+  if (not valid_duty_cycle) {
+    hal::safe_throw(hal::operation_not_supported(this));
+  }
+
+  m_scl->configure(
+    { .resistor = hal::pin_resistor::pull_up, .open_drain = true });
+  m_sda->configure(
+    { .resistor = hal::pin_resistor::pull_up, .open_drain = true });
+
+  bit_bang_i2c::driver_configure(p_settings);
 }
 
 // Private
@@ -56,6 +67,7 @@ bit_bang_i2c::bit_bang_i2c(pins const& p_pins,
   introduce to the system. See libhal-soft/demos/seleae_captures for the
   comparisons.
 */
+
 void bit_bang_i2c::driver_configure(settings const& p_settings)
 {
   using namespace std::chrono_literals;
