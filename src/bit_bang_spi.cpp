@@ -5,7 +5,6 @@
 #include <libhal-util/steady_clock.hpp>
 #include <libhal/steady_clock.hpp>
 #include <libhal/units.hpp>
-#include <sys/types.h>
 
 namespace hal::soft {
 // public
