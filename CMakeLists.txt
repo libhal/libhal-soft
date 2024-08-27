@@ -20,6 +20,7 @@ libhal_test_and_make_library(
 
   SOURCES
   src/bit_bang_i2c.cpp
+  src/bit_bang_spi.cpp
   src/rc_servo.cpp
   src/i2c_minimum_speed.cpp
   src/atomic_spin_lock.cpp
