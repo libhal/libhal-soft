@@ -24,6 +24,7 @@ bit_bang_spi::bit_bang_spi(pins const& p_pins,
     { .resistor = hal::pin_resistor::none, .open_drain = false });
   m_cipo->configure({ .resistor = hal::pin_resistor::pull_up });
   hal::soft::bit_bang_spi::driver_configure(p_settings);
+  m_sck->level(m_polarity);
 }
 
 // private
