@@ -48,6 +48,7 @@ libhal_test_and_make_library(
   tests/inverter.test.cpp
   tests/rc_servo.test.cpp
   tests/atomic_spin_lock.test.cpp
+  tests/i2c_arbitration_manager.test.cpp
   tests/main.test.cpp
 
   PACKAGES
