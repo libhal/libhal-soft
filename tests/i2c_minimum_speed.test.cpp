@@ -63,8 +63,8 @@ namespace hal::soft {
 boost::ut::suite test_minimum_speed = []() {
   using namespace boost::ut;
 
-  "hal::i2c::minimum_speed_i2c"_test = []() {
-    "create() with default frequency + configure()"_test = []() {
+  "hal::soft::minimum_speed_i2c"_test = []() {
+    "::configure()"_test = []() {
       // Setup
       fake_i2c mock_i2c;
       constexpr hal::i2c::settings minimum_default = {
@@ -86,7 +86,7 @@ boost::ut::suite test_minimum_speed = []() {
              std::get<0>(mock_i2c.spy_configure.call_history().at(0)));
     };
 
-    "transaction pass through"_test = []() {
+    "::transaction() pass through"_test = []() {
       // Setup
       constexpr hal::byte expected_address{ 0xAA };
       constexpr std::array<hal::byte const, 2> data_out{ hal::byte{ 0xAB },
